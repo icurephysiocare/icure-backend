@@ -1,0 +1,239 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Physio Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_collection_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "Create New Patient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"patientId\", jsonData.id);",
+                  "console.log(\"Patient ID created: \" + pm.environment.get(\"patientId\"));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"date\": \"2025-10-27T00:00:00.000Z\",\n  \"age\": 45,\n  \"gender\": \"female\",\n  \"contactNo\": \"9876543210\",\n  \"referredBy\": \"Dr. Smith\",\n  \"address\": \"789 Oak Ave, Anytown\",\n  \"occupation\": \"Teacher\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Patients / Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients?searchTerm=Jane",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients"
+              ],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "Jane",
+                  "description": "Optional search term for patient name"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Patient by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients/{{patientId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                "{{patientId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Assessments",
+      "item": [
+        {
+          "name": "Create New Assessment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"assessmentId\", jsonData.id);",
+                  "console.log(\"Assessment ID created: \" + pm.environment.get(\"assessmentId\"));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chiefComplaintOnset\": \"2 weeks ago after lifting a heavy box\",\n  \"chiefComplaintWorse\": \"Bending forward, sitting for long periods\",\n  \"chiefComplaintBetter\": \"Lying down, gentle walking\",\n  \"chiefComplaintTreatment\": \"None prior to this\",\n  \"chiefComplaintDescription\": \"Patient reports a sharp, localized pain in the lower back that started 2 weeks ago. Pain is intermittent but severe when aggravated. No radiation to legs.\",\n  \"painOnset\": \"Acute\",\n  \"painDuration\": \"2 weeks\",\n  \"painLocation\": \"Lumbar spine, L4-L5 area\",\n  \"painType\": \"Sharp, sometimes dull ache\",\n  \"aggravatingFactors\": \"Forward bending, prolonged sitting, coughing/sneezing\",\n  \"relievingFactors\": \"Rest, ice, gentle stretching\",\n  \"painScale\": 7,\n  \"painFrequency\": \"Intermittent, daily\",\n  \"painRadiation\": \"No radiation\",\n  \"painTiming\": \"Worse in the morning and after activity\",\n  \"functionalLimitation\": \"Difficulty with dressing, tying shoes, driving more than 30 minutes\",\n  \"palpationFindings\": \"Tenderness over L4-L5 spinous processes, mild muscle spasm in paraspinal muscles\",\n  \"associatedProblems\": \"None reported\",\n  \"muscularEvaluation\": \"Reduced core strength, mild weakness in gluteus maximus\",\n  \"jointEvaluation\": \"Reduced lumbar flexion ROM, painful at end range. Normal hip ROM.\",\n  \"postureFindings\": \"Slightly flattened lumbar lordosis in standing, increased anterior pelvic tilt in sitting.\",\n  \"gaitAnalysis\": \"Antalgic gait with reduced stride length on right side due to pain.\",\n  \"specialTests\": \"SLR negative bilaterally. Lumbar compression test negative. Kemps test positive on right side.\",\n  \"diagnosis\": \"Acute Lumbar Sprain/Strain, L4-L5 level\",\n  \"shortTermGoals\": \"Reduce pain to 3/10, improve lumbar flexion by 20%, independent with ADLs.\",\n  \"longTermGoals\": \"Return to work without pain, full lumbar ROM, able to lift 20kg safely.\",\n  \"interventions\": \"Manual therapy (mobilization), therapeutic exercises (core stabilization, glute activation), education on posture and body mechanics, modalities (ice/heat).\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients/{{patientId}}/assessments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                "{{patientId}}",
+                "assessments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Assessment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients/{{patientId}}/assessments/{{assessmentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                "{{patientId}}",
+                "assessments",
+                "{{assessmentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Assessment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"painScale\": 4,\n  \"shortTermGoals\": \"Reduce pain to 2/10, improve lumbar flexion by 30%.\",\n  \"diagnosis\": \"Resolved acute lumbar sprain, chronic postural dysfunction.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/patients/{{patientId}}/assessments/{{assessmentId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                "{{patientId}}",
+                "assessments",
+                "{{assessmentId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "patientId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "assessmentId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
