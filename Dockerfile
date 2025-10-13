@@ -11,7 +11,7 @@ COPY . .
 
 # Cloud Run expects the app to listen on the port defined by the PORT environment variable
 # which defaults to 8080 if not set.
-ENV PORT 8080
+# ENV PORT 8080
 EXPOSE 8080
 
 CMD ["npm", "start"]
