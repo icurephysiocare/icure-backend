@@ -1,17 +1,26 @@
 # physio-backend/Dockerfile
+
+# Use official Node.js 18 LTS image
 FROM node:18-slim
 
+# Set working directory
 WORKDIR /usr/src/app
 
+# Copy package files
 COPY package*.json ./
 
-RUN npm install --production
+# Install production dependencies only
+RUN npm ci --only=production
 
+# Copy application source code
 COPY . .
 
-# Cloud Run expects the app to listen on the port defined by the PORT environment variable
-# which defaults to 8080 if not set.
-# ENV PORT 8080
+# Set environment variables (will be overridden by Cloud Run)
+ENV NODE_ENV=production
+ENV PORT=8080
+
+# Expose port 8080
 EXPOSE 8080
 
+# Start the application
 CMD ["npm", "start"]
